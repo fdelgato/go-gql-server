@@ -1,0 +1,157 @@
+scalar Time
+# Types
+type User {
+  id: ID!
+  username: String!
+  password: String!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  createdAt: Time!
+  updatedAt: Time
+  dessertList: [Dessert!]
+}
+
+type Dessert {
+  id: ID!
+  name: String!
+  description: String
+  unit: String!
+  amount: Int!
+  amountMinimum: Int!
+  amountInterval: Int!
+  degreeTop: String!
+  degreeDown: String!
+  bakingTime: Int!
+  bigImageUrl: String!
+  smallImageUrl: String!
+  thumbnailUrl: String!
+  createdAt: Time!
+  updatedAt: Time
+  stepList: [Step!]
+  ingredientGroupList: [IngredientGroup!]
+  category: Category!
+}
+
+type IngredientGroup {
+  id: ID!
+  name: String!
+  createdAt: Time!
+  updatedAt: Time
+  ingredientList: [Ingredient!]
+  dessert: Dessert!
+}
+
+type Ingredient {
+  id: ID!
+  name: String!
+  unit: String!
+  amount: Int!
+  createdAt: Time!
+  updatedAt: Time
+  ingredientGroup: IngredientGroup!
+}
+
+type Step {
+  id: ID!
+  name: String!
+  content: String!
+  notice: String!
+  order: Int!
+  createdAt: Time!
+  updatedAt: Time
+  dessert: Dessert!
+}
+
+# Input Types
+input CategoryInput {
+  name: String
+}
+
+input DessertInput {
+  name: String
+  description: String
+  unit: String
+  amount: Int
+  amountMinimum: Int
+  amountInterval: Int
+  degreeTop: String
+  degreeDown: String
+  bakingTime: Int
+  bigImageUrl: String
+  smallImageUrl: String
+  thumbnailUrl: String
+  categoryId: String
+}
+
+input IngredientGroupInput {
+  name: String
+  dessertId: String
+}
+
+input IngredientInput {
+  name: String
+  unit: String
+  amount: Int
+  ingredientGroupId: String
+}
+
+input StepInput {
+  name: String
+  content: String
+  notice: String
+  order: Int
+  dessertId: String
+}
+
+input UserInput {
+  username: String
+  password: String
+}
+
+# Define mutations here
+type Mutation {
+  createCategory(input: CategoryInput): Category! @isAuthenticated
+  updateCategory(id: ID!, input: CategoryInput): Category! @isAuthenticated
+  deleteCategory(id: ID!): Boolean! @isAuthenticated
+
+  createDessert(input: DessertInput): Dessert! @isAuthenticated
+  updateDessert(id: ID!, input: DessertInput): Dessert! @isAuthenticated
+  deleteDessert(id: ID!): Boolean! @isAuthenticated
+
+  createIngredientGroup(input: IngredientGroupInput): IngredientGroup! @isAuthenticated
+  updateIngredientGroup(id: ID!, input: IngredientGroupInput): IngredientGroup! @isAuthenticated
+  deleteIngredientGroup(id: ID!): Boolean! @isAuthenticated
+
+  createIngredient(input: IngredientInput): Ingredient! @isAuthenticated
+  updateIngredient(id: ID!, input: IngredientInput): Ingredient! @isAuthenticated
+  deleteIngredient(id: ID!): Boolean! @isAuthenticated
+
+  createStep(input: StepInput): Step! @isAuthenticated
+  updateStep(id: ID!, input: StepInput): Step! @isAuthenticated
+  deleteStep(id: ID!): Boolean! @isAuthenticated
+
+  login(input: UserInput): String!
+}
+
+# Define queries here
+type Query {
+  categories: [Category!]!
+  category(id: ID!): Category
+
+  desserts: [Dessert!]!
+  dessert(id: ID!): Dessert
+
+  ingredientGroups: [IngredientGroup!]!
+  ingredientGroup(id: ID!): IngredientGroup
+
+  ingredients: [Ingredient!]!
+  ingredient(id: ID!): Ingredient
+
+  steps: [Step!]!
+  step(id: ID!): Step
+}
+
+directive @isAuthenticated on FIELD_DEFINITION
