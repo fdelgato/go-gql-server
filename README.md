@@ -7,7 +7,7 @@
 `$ ./scripts/run.sh`
 
 ### Setup go mod
-`$ go mod init github.com/wtlin1228/go-graphql-server`
+`$ go mod init github.com/fdelgato/go-graphql-server`
 
 ### Install libraries
 `$ go get -u github.com/gin-gonic/gin`
@@ -27,11 +27,12 @@
 4. `./scripts/gqlgen.sh`
 5. 修改 GQLGen 產生的 Resolvers
 
-### How to create a postgreSQL DB for this server 
-1. `$ psql` 進到 postgreSQL
-2. `$ postgre=# CREATE DATABASE yourdbname;`
-3. `$ postgre=# CREATE USER youruser WITH ENCRYPTED PASSWORD 'yourpass';`
-4. `$ postgre=# GRANT ALL PRIVILEGES ON DATABASE yourdbname TO youruser;`
+### How to create a MySQL DB for this server 
+1. `$ mysql` 進到 MySQL
+2. `$ mysql=# CREATE DATABASE yourdbname;`
+3. `$ mysql=# CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';`
+4. `$ mysql=# GRANT ALL PRIVILEGES ON * . * TO 'newuser'@'localhost';`
+5. `$ mysql=# FLUSH PRIVILEGES;`
 
 ### How to setup ENV
 可以參考 `.env.example`
